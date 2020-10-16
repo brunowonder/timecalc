@@ -1,81 +1,85 @@
 <!doctype html>
 <html class="no-js" lang="">
-<head>
-  <meta charset="utf-8">
-  <title>My fancy calc</title>
+    <head>
+        <meta charset="utf-8">
+        <title>My fancy calc</title>
+        <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+        <script type="text/javascript">
+            function calculate() {
+              const coins    = parseFloat(document.getElementById("coins").value);
+              const balance  = parseFloat(document.getElementById("balance").value);
+              const duration = parseFloat(document.getElementById("duration").value);
+              const price    = parseFloat(document.getElementById("price").value);
 
- 
+              balance_result = balance
+              usd_result     = price
+              coins_now      = coins
 
-  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+              if (coins_now > 0) {
+                  // Calculate daily rewards
+                  for(i = 0; i < duration; ++i) {
+                      percent = balance_result / coins_now;
+                      balance_result = balance_result + (24 * percent);
+                      coins_now += 24;
+                  }
+                  document.getElementById("balance_result").value = balance_result;
+                  document.getElementById("usd_result").value = balance_result * price;
+              }
+            }
 
- 
 
-  <script type="text/javascript">
-      function calculateStuff() {
-		const coins    = parseFloat(document.getElementById("coins").value);
-        const balance  = parseFloat(document.getElementById("balance").value);
-        const duration = parseFloat(document.getElementById("duration").value);
-        const price    = parseFloat(document.getElementById("price").value);
 
-		balance_result = balance
-		usd_result     = price
-		coins_now      = coins
-
-        if (coins !== "" && balance !== "" && duration !== "" && price !== "") {
-			// Calculate daily rewards
-			for(i = 0; i <= duration; ++i) {
-				percent = balance_result / coins_now;
-				balance_result = balance_result + (24 * percent);
-				coins_now += 24;
-			}
-		
-		
-            document.getElementById("balance_result").value = balance_result;
-			document.getElementById("usd_result").value = balance_result * price;
-		}
-      }
-
- 
-
-      window.onload = () => {
-        document.getElementById("coins").addEventListener("keyup", calculateStuff);
-        document.getElementById("balance").addEventListener("keyup", calculateStuff);
-        document.getElementById("duration").addEventListener("keyup", calculateStuff);
-        document.getElementById("price").addEventListener("keyup", calculateStuff);
-      };
-  </script>
-</head>
-
- 
-
-<body>
-  <p>Hello world! This is HTML5 Boilerplate.</p>
-  <section>
-      <h3>
-          Enter your moneyz
-      </h3>
-
- 
-
-      <label for="coins">Coins:</label>
-      <input id="coins" type="number" step="1">
-      
-      <label for="balance">Balance:</label>
-      <input id="balance" type="number" step="0.000000001">
-
-      <label for="duration">Duration:</label>
-      <input id="duration" type="number" step="1">
-      
-      <label for="price">Price:</label>
-      <input id="price" type="number" step="0.01">
- 
-	  <br><br>
-	  
-      <span>Balance:</span>
-      <input id="balance_result" readonly>
-	  
-      <span>USD Value:</span>
-      <input id="usd_result" readonly>	  
-  </section>
-</body>
+            window.onload = () => {
+              document.getElementById("coins").addEventListener("input", calculate);
+              document.getElementById("balance").addEventListener("input", calculate);
+              document.getElementById("duration").addEventListener("input", calculate);
+              document.getElementById("price").addEventListener("input", calculate);
+            };
+        </script>
+    </head>
+    <body>
+        <font face=Arial>
+        <center>
+        <p><h2>Welcome to TimeCalc</h2></p>
+        <span>
+            Open the timeminer website and connect your<br>
+            wallet so you can copy-paste the values.
+        </span>
+        </center>
+        <br><br>
+        <section>
+            <center>
+            <label for="coins">How many TIME tokens exist now?</label><br><br>
+            <input id="coins" type="number" step="1" value="0" min="0">
+            <br><br>
+            <label for="balance">What is your REAL balance?</label><br><br>
+            <input id="balance" type="number" step="0.000000001" value="0" min="0">
+            <br><br>
+            <label for="duration">How many days you want to hold?</label><br><br>
+            <input id="duration" type="number" step="1" value="0" min="0">
+            <br><br>
+            <label for="price">What would be the exit price in USD?</label><br><br>
+            <input id="price" type="number" step="0.01" value="500" min="0">
+            <br><br>
+            <p><h2>Results</h2></p>
+            <span>TIME tokens:</span><br><br>
+            <input id="balance_result" readonly><br><br>
+            <span>USD Value:</span><br><br>
+            <input id="usd_result" readonly>
+            </center>
+        </section>
+        <br><br>
+        <section>
+            <center>
+            <span>
+                If you appreciate this calculator you can send some<br>
+                TIME, ETH or shitcoins to following address:<br><br>
+                <b>0xe07a5678E6DfC2Ff7D46d7b7abd68c76154A6edA</b>
+                <br><br>
+            </span>
+            </center>
+        </section>
+        <br><br>
+        </font>
+    </body>
 </html>
