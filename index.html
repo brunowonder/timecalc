@@ -1,0 +1,81 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <title>My fancy calc</title>
+
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+ 
+
+  <script type="text/javascript">
+      function calculateStuff() {
+		const coins    = parseFloat(document.getElementById("coins").value);
+        const balance  = parseFloat(document.getElementById("balance").value);
+        const duration = parseFloat(document.getElementById("duration").value);
+        const price    = parseFloat(document.getElementById("price").value);
+
+		balance_result = balance
+		usd_result     = price
+		coins_now      = coins
+
+        if (coins !== "" && balance !== "" && duration !== "" && price !== "") {
+			// Calculate daily rewards
+			for(i = 0; i <= duration; ++i) {
+				percent = balance_result / coins_now;
+				balance_result = balance_result + (24 * percent);
+				coins_now += 24;
+			}
+		
+		
+            document.getElementById("balance_result").value = balance_result;
+			document.getElementById("usd_result").value = balance_result * price;
+		}
+      }
+
+ 
+
+      window.onload = () => {
+        document.getElementById("coins").addEventListener("keyup", calculateStuff);
+        document.getElementById("balance").addEventListener("keyup", calculateStuff);
+        document.getElementById("duration").addEventListener("keyup", calculateStuff);
+        document.getElementById("price").addEventListener("keyup", calculateStuff);
+      };
+  </script>
+</head>
+
+ 
+
+<body>
+  <p>Hello world! This is HTML5 Boilerplate.</p>
+  <section>
+      <h3>
+          Enter your moneyz
+      </h3>
+
+ 
+
+      <label for="coins">Coins:</label>
+      <input id="coins" type="number" step="1">
+      
+      <label for="balance">Balance:</label>
+      <input id="balance" type="number" step="0.000000001">
+
+      <label for="duration">Duration:</label>
+      <input id="duration" type="number" step="1">
+      
+      <label for="price">Price:</label>
+      <input id="price" type="number" step="0.01">
+ 
+	  <br><br>
+	  
+      <span>Balance:</span>
+      <input id="balance_result" readonly>
+	  
+      <span>USD Value:</span>
+      <input id="usd_result" readonly>	  
+  </section>
+</body>
+</html>
